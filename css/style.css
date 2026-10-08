@@ -166,3 +166,19 @@ li.doc {
 input[type="file"] {
   background: #f8fafc;
 }
+.btn {
+  display: block;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.btn.outline {
+  background: white;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+}
