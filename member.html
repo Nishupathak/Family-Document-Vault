@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documents - Family Vault</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="card wide">
+    <p><a href="dashboard.html">← Back to dashboard</a></p>
+    <h1 id="memberTitle">Loading...</h1>
+
+    <h2>Upload a document</h2>
+    <form id="uploadForm">
+      <input type="text" id="docTitle" placeholder="Title (e.g. Aadhaar Card)" required>
+      <select id="docCategory" required>
+        <option value="">Category</option>
+        <option>ID Proof</option>
+        <option>Education</option>
+        <option>Medical</option>
+        <option>Insurance</option>
+        <option>Property</option>
+        <option>Bank / Finance</option>
+        <option>Bills</option>
+        <option>Other</option>
+      </select>
+      <input type="file" id="docFile" accept=".pdf,.jpg,.jpeg,.png" required>
+      <button type="submit">Upload</button>
+    </form>
+
+    <p id="message"></p>
+
+    <h2>Documents</h2>
+    <ul id="docList"></ul>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/member.js"></script>
+</body>
+</html>

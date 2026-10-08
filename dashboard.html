@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Family Vault</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="card wide">
+    <h1>🏠 Dashboard</h1>
+    <p id="welcome">Loading...</p>
+
+    <h2>Family Members</h2>
+    <form id="memberForm" class="row">
+      <input type="text" id="memberName" placeholder="Name" required>
+      <select id="memberRelation" required>
+        <option value="">Relation</option>
+        <option>Self</option>
+        <option>Father</option>
+        <option>Mother</option>
+        <option>Spouse</option>
+        <option>Son</option>
+        <option>Daughter</option>
+        <option>Brother</option>
+        <option>Sister</option>
+        <option>Grandparent</option>
+        <option>Other</option>
+      </select>
+      <button type="submit">Add</button>
+    </form>
+
+    <p id="message"></p>
+    <ul id="memberList"></ul>
+
+    <button id="logoutBtn" class="secondary">Logout</button>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
