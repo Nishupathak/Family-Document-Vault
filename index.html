@@ -1,27 +1,294 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Family Vault</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f4c5c">
+<title>Family Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#10262e;--mut:#5b6f77;--bg:#eef3f4;--card:#fff;--line:#dbe5e8;--brand:#0f4c5c;--brand2:#0b3a47;--gold:#f2a900;--red:#c8372d;--ok:#1b7f4b;--r:16px}
+@media(prefers-color-scheme:dark){:root{--ink:#e8f1f3;--mut:#9ab0b8;--bg:#0b1a1f;--card:#12272e;--line:#23404a;--brand:#2a8fa8;--brand2:#217690}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Plus Jakarta Sans',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--brand);font-weight:700;text-decoration:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;background:var(--brand2);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:10px}
+.top .brand{font-weight:800;font-size:18px;flex:1;cursor:pointer}
+.top button{background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px}
+h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:17px;font-weight:800;margin-bottom:12px}
+.sub{color:var(--mut);font-size:14px;line-height:1.5}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:12px}
+input,select{width:100%;margin-top:6px;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px}
+input:focus,select:focus{border-color:var(--brand);outline:none}
+.btn{width:100%;border:0;border-radius:12px;padding:14px;background:var(--brand);color:#fff;font-weight:800;font-size:16px;cursor:pointer}
+.btn:disabled{opacity:.6}
+.btn.sm{width:auto;padding:9px 14px;font-size:14px}
+.btn.alt{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
+.btn.del{background:var(--red)}
+.auth{max-width:420px;margin:0 auto;padding:calc(40px + env(safe-area-inset-top)) 18px 30px;text-align:center}
+.auth .logo{width:72px;height:72px;margin:0 auto 14px;border-radius:22px;background:var(--brand);display:grid;place-items:center;font-size:34px}
+.auth .card{text-align:left;margin:22px 0 16px}
+.auth .sub{text-align:center}
+.lnk{display:block;text-align:center;margin-top:14px;font-size:14px}
+.hero{background:linear-gradient(135deg,var(--brand2),var(--brand));color:#fff;border:0}
+.hero .sub{color:#cfe3e8}
+.pill{display:inline-block;background:rgba(255,255,255,.18);border-radius:99px;padding:3px 12px;font-size:12px;font-weight:700;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}
+@media(min-width:520px){.grid{grid-template-columns:repeat(3,1fr)}}
+.mem{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 12px;text-align:center;cursor:pointer}
+.mem:active{transform:scale(.97)}
+.av{width:54px;height:54px;border-radius:50%;background:var(--gold);color:#3a2a00;font-weight:800;font-size:22px;display:grid;place-items:center;margin:0 auto 10px}
+.mem b{display:block;font-size:15px}
+.mem span{font-size:12px;color:var(--mut)}
+.row{display:flex;gap:10px;align-items:center}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.ico{width:44px;height:44px;border-radius:12px;background:var(--bg);display:grid;place-items:center;font-size:22px;flex:none}
+.item .t{flex:1;min-width:0}
+.item .t b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .t span{font-size:12px;color:var(--mut)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.empty{text-align:center;color:var(--mut);padding:20px 8px;font-size:14px}
+.code{font-size:22px;font-weight:800;letter-spacing:3px;margin:10px 0}
+.back{display:inline-block;margin-bottom:12px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(30px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:700;font-size:14px;opacity:0;transition:.25s;z-index:20;max-width:90%;text-align:center;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%)}
+#toast.err{background:var(--red);color:#fff}
+.spin{text-align:center;padding:80px 0;color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 <body>
-  <main class="card">
-    <h1>🔐 Family Vault</h1>
-    <p>All our family documents, safe in one place.</p>
-    <a href="login.html" class="btn">Login</a>
-    <a href="register.html" class="btn outline">Create Account</a>
-  </main>
+<div id="root"><div class="spin">Loading…</div></div>
+<div id="toast"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
-  <script>
-    // If already logged in, go straight to the dashboard
-    db.auth.getSession().then(({ data }) => {
-      if (data.session) window.location.href = "dashboard.html";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+const root = document.getElementById("root");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const S = { user: null, fam: null, recovery: location.hash.includes("type=recovery"), mode: "login" };
+const CATS = ["ID Proof","Education","Medical","Insurance","Property","Bank / Finance","Bills","Other"];
+const RELS = ["Self","Father","Mother","Spouse","Son","Daughter","Brother","Sister","Grandparent","Other"];
+
+function toast(msg, err) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.className = "show" + (err ? " err" : "");
+  clearTimeout(toast.id); toast.id = setTimeout(() => t.className = "", 3500);
+}
+async function busy(btn, fn) {
+  const old = btn.textContent; btn.disabled = true; btn.textContent = "Please wait…";
+  try { await fn(); } finally { btn.disabled = false; btn.textContent = old; }
+}
+function shell(inner) {
+  root.innerHTML = `<div class="top"><div class="brand" id="home">🔐 Family Vault</div><button id="out">Log out</button></div><div class="wrap">${inner}</div>`;
+  document.getElementById("home").onclick = () => go("/");
+  document.getElementById("out").onclick = async () => { await db.auth.signOut(); };
+}
+function go(path) { history.pushState({}, "", path); route(); }
+window.onpopstate = () => route();
+
+/* ---------- ROUTER ---------- */
+async function route() {
+  if (S.recovery) return viewReset();
+  if (!S.user) return viewAuth(S.mode);
+  if (!S.fam) {
+    const { data, error } = await db.from("family_users")
+      .select("family_id, role, families(name)").eq("user_id", S.user.id).maybeSingle();
+    if (error) { toast(error.message, true); return; }
+    if (!data) return viewSetup();
+    S.fam = { id: data.family_id, role: data.role, name: data.families.name };
+  }
+  const mid = new URLSearchParams(location.search).get("m");
+  return mid ? viewMember(mid) : viewHome();
+}
+
+/* ---------- LOGIN / REGISTER / FORGOT ---------- */
+function viewAuth(mode) {
+  S.mode = mode;
+  const T = { login: ["Log in", "Open your family documents"], register: ["Create account", "Join your family vault"], forgot: ["Reset password", "Enter your email and we will send a reset link"] }[mode];
+  root.innerHTML = `<div class="auth"><div class="logo">🔐</div><h1>Family Vault</h1><p class="sub">${T[1]}</p>
+  <form id="f" class="card">
+    ${mode === "register" ? '<label>Full name<input id="n" required autocomplete="name"></label>' : ""}
+    <label>Email<input id="e" type="email" required autocomplete="email"></label>
+    ${mode !== "forgot" ? `<label>Password<input id="p" type="password" minlength="8" required autocomplete="${mode === "login" ? "current-password" : "new-password"}" placeholder="At least 8 characters"></label>` : ""}
+    <button class="btn" id="go">${mode === "forgot" ? "Send reset link" : T[0]}</button>
+    ${mode === "login" ? '<a class="lnk" data-m="forgot">Forgot password?</a>' : ""}
+  </form>
+  <p class="sub">${mode === "login" ? 'New here? <a data-m="register">Create an account</a>' : '<a data-m="login">Back to log in</a>'}</p></div>`;
+  root.querySelectorAll("[data-m]").forEach(a => a.onclick = () => viewAuth(a.dataset.m));
+  document.getElementById("f").onsubmit = e => {
+    e.preventDefault();
+    busy(document.getElementById("go"), async () => {
+      const email = document.getElementById("e").value.trim();
+      const pw = mode !== "forgot" ? document.getElementById("p").value : "";
+      if (mode === "login") {
+        const { error } = await db.auth.signInWithPassword({ email, password: pw });
+        if (error) toast(error.message, true);
+      } else if (mode === "register") {
+        const name = document.getElementById("n").value.trim();
+        const { data, error } = await db.auth.signUp({ email, password: pw, options: { data: { full_name: name }, emailRedirectTo: location.origin } });
+        if (error) return toast(error.message, true);
+        if (!data.session) { toast("Check your email and tap the confirmation link, then log in."); viewAuth("login"); }
+      } else {
+        const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: location.origin });
+        if (error) return toast(error.message, true);
+        toast("Reset link sent. Check your email."); viewAuth("login");
+      }
     });
-  </script>
+  };
+}
+
+/* ---------- SET NEW PASSWORD (from email link) ---------- */
+function viewReset() {
+  root.innerHTML = `<div class="auth"><div class="logo">🔑</div><h1>New password</h1><p class="sub">Choose a new password for your account</p>
+  <form id="f" class="card">
+    <label>New password<input id="p1" type="password" minlength="8" required autocomplete="new-password"></label>
+    <label>Confirm password<input id="p2" type="password" minlength="8" required autocomplete="new-password"></label>
+    <button class="btn" id="go">Save new password</button></form></div>`;
+  document.getElementById("f").onsubmit = e => {
+    e.preventDefault();
+    busy(document.getElementById("go"), async () => {
+      const a = document.getElementById("p1").value, b = document.getElementById("p2").value;
+      if (a !== b) return toast("Passwords do not match.", true);
+      const { error } = await db.auth.updateUser({ password: a });
+      if (error) return toast(error.message, true);
+      S.recovery = false; history.replaceState({}, "", location.pathname);
+      toast("Password changed."); route();
+    });
+  };
+}
+
+/* ---------- CREATE OR JOIN FAMILY ---------- */
+function viewSetup() {
+  shell(`<div class="card"><h1>Welcome 👋</h1><p class="sub" style="margin-top:6px">Start a new family vault, or join one your family already made.</p></div>
+  <form id="cf" class="card"><h2>Start a new family</h2>
+    <label>Family name<input id="fn" required placeholder="e.g. Pathak Family"></label>
+    <button class="btn" id="cb">Create family</button></form>
+  <form id="jf" class="card"><h2>Join with an invite code</h2>
+    <label>Invite code<input id="jc" required placeholder="Ask the family admin" autocapitalize="characters"></label>
+    <button class="btn alt" id="jb">Join family</button></form>`);
+  document.getElementById("cf").onsubmit = e => { e.preventDefault(); busy(document.getElementById("cb"), async () => {
+    const { error } = await db.rpc("create_family", { family_name: document.getElementById("fn").value.trim() });
+    if (error) return toast(error.message, true); S.fam = null; route(); }); };
+  document.getElementById("jf").onsubmit = e => { e.preventDefault(); busy(document.getElementById("jb"), async () => {
+    const { error } = await db.rpc("join_family", { invite_code: document.getElementById("jc").value.trim() });
+    if (error) return toast(error.message, true); S.fam = null; route(); }); };
+}
+
+/* ---------- HOME: family members ---------- */
+async function viewHome() {
+  const admin = S.fam.role === "admin";
+  const [mem, ppl] = await Promise.all([
+    db.from("members").select("*, documents(count)").order("created_at"),
+    db.from("family_users").select("display_name, role").order("joined_at")
+  ]);
+  if (mem.error) return toast(mem.error.message, true);
+  const cards = mem.data.length ? `<div class="grid">${mem.data.map(m => `<div class="mem" data-id="${m.id}"><div class="av">${esc(m.name[0].toUpperCase())}</div><b>${esc(m.name)}</b><span>${esc(m.relation)} · ${m.documents?.[0]?.count || 0} files</span></div>`).join("")}</div>`
+    : `<div class="card empty">No one added yet. Add the first person below, then open their folder to upload documents.</div>`;
+  shell(`<div class="card hero"><h1>${esc(S.fam.name)}</h1><p class="sub">Hi ${esc(S.user.user_metadata?.full_name || "there")}, tap a person to open their documents.</p><span class="pill">${admin ? "Admin" : "Member"}</span></div>
+  <h2>Folders</h2>${cards}
+  <form id="af" class="card"><h2>Add a person</h2>
+    <label>Name<input id="an" required></label>
+    <label>Relation<select id="ar" required><option value="">Choose…</option>${RELS.map(r => `<option>${r}</option>`).join("")}</select></label>
+    <button class="btn" id="ab">Add person</button></form>
+  ${admin ? `<div class="card"><h2>Invite a family member</h2><p class="sub">They create an account, then enter your code. It works for 7 days.</p><div id="inv"></div><button class="btn alt" id="ib" style="margin-top:12px">Create invite code</button></div>` : ""}
+  <div class="card"><h2>People with a login</h2>${(ppl.data || []).map(p => `<div class="item"><div class="ico">👤</div><div class="t"><b>${esc(p.display_name)}</b><span>${p.role === "admin" ? "Admin" : "Member"}</span></div></div>`).join("")}</div>`);
+  root.querySelectorAll(".mem").forEach(c => c.onclick = () => go("/?m=" + c.dataset.id));
+  document.getElementById("af").onsubmit = e => { e.preventDefault(); busy(document.getElementById("ab"), async () => {
+    const { error } = await db.from("members").insert({ name: document.getElementById("an").value.trim(), relation: document.getElementById("ar").value, family_id: S.fam.id });
+    if (error) return toast(error.message, true); toast("Person added."); viewHome(); }); };
+  if (admin) document.getElementById("ib").onclick = async () => {
+    const { data, error } = await db.rpc("create_invite");
+    if (error) return toast(error.message, true);
+    const msg = `Join our Family Vault: ${location.origin}\nInvite code: ${data}`;
+    document.getElementById("inv").innerHTML = `<div class="code">${esc(data)}</div><button class="btn sm" id="sh">Share</button>`;
+    document.getElementById("sh").onclick = async () => {
+      if (navigator.share) { try { await navigator.share({ text: msg }); } catch (e) {} }
+      else { await navigator.clipboard.writeText(msg); toast("Copied. Paste it in WhatsApp."); }
+    };
+  };
+}
+
+/* ---------- MEMBER: documents ---------- */
+async function viewMember(id) {
+  const admin = S.fam.role === "admin";
+  const { data: m, error } = await db.from("members").select("*").eq("id", id).maybeSingle();
+  if (error || !m) { toast("Folder not found.", true); return go("/"); }
+  const { data: docs, error: de } = await db.from("documents").select("*").eq("member_id", id).order("created_at", { ascending: false });
+  if (de) return toast(de.message, true);
+  const icon = d => d.file_type === "application/pdf" ? "📄" : "🖼️";
+  const size = b => b > 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(b / 1024)) + " KB";
+  shell(`<a class="back" id="bk">← All folders</a>
+  <div class="card hero"><h1>${esc(m.name)}</h1><p class="sub">${esc(m.relation)} · ${docs.length} documents</p></div>
+  <form id="uf" class="card"><h2>Upload a document</h2>
+    <label>Title<input id="dt" required placeholder="e.g. Aadhaar card"></label>
+    <label>Category<select id="dc" required><option value="">Choose…</option>${CATS.map(c => `<option>${c}</option>`).join("")}</select></label>
+    <label>File (PDF, JPG or PNG, up to 10 MB)<input id="df" type="file" accept=".pdf,.jpg,.jpeg,.png" required></label>
+    <button class="btn" id="ub">Upload</button></form>
+  <div class="card"><h2>Documents</h2>${docs.length ? docs.map(d => `<div class="item"><div class="ico">${icon(d)}</div><div class="t"><b>${esc(d.title)}</b><span>${esc(d.category)} · ${size(d.file_size || 0)}</span></div>
+    <div class="acts"><button class="btn sm" data-v="${d.id}">Open</button><button class="btn sm alt" data-d="${d.id}">Save</button>${admin ? `<button class="btn sm del" data-x="${d.id}">Delete</button>` : ""}</div></div>`).join("") : '<div class="empty">Nothing here yet. Upload the first document above.</div>'}</div>
+  ${admin ? '<button class="btn del" id="dm">Delete this folder</button>' : ""}`);
+  const find = k => docs.find(d => d.id === k);
+  document.getElementById("bk").onclick = () => go("/");
+  root.querySelectorAll("[data-v]").forEach(b => b.onclick = async () => {
+    const w = window.open("", "_blank"), d = find(b.dataset.v);
+    const { data, error } = await db.storage.from("documents").createSignedUrl(d.file_path, 120);
+    if (error) { if (w) w.close(); return toast(error.message, true); }
+    if (w) w.location.href = data.signedUrl; else location.href = data.signedUrl;
+  });
+  root.querySelectorAll("[data-d]").forEach(b => b.onclick = async () => {
+    const d = find(b.dataset.d);
+    const { data, error } = await db.storage.from("documents").createSignedUrl(d.file_path, 120, { download: d.file_name });
+    if (error) return toast(error.message, true); location.href = data.signedUrl;
+  });
+  root.querySelectorAll("[data-x]").forEach(b => b.onclick = async () => {
+    const d = find(b.dataset.x);
+    if (!confirm("Delete " + d.title + "? This cannot be undone.")) return;
+    const r1 = await db.storage.from("documents").remove([d.file_path]);
+    if (r1.error) return toast(r1.error.message, true);
+    const r2 = await db.from("documents").delete().eq("id", d.id);
+    if (r2.error) return toast(r2.error.message, true);
+    toast("Deleted."); viewMember(id);
+  });
+  if (admin) document.getElementById("dm").onclick = async () => {
+    if (!confirm("Delete " + m.name + " and ALL their documents?")) return;
+    if (docs.length) { const r = await db.storage.from("documents").remove(docs.map(d => d.file_path)); if (r.error) return toast(r.error.message, true); }
+    const r2 = await db.from("members").delete().eq("id", id);
+    if (r2.error) return toast(r2.error.message, true);
+    toast("Folder deleted."); go("/");
+  };
+  document.getElementById("uf").onsubmit = e => { e.preventDefault(); busy(document.getElementById("ub"), async () => {
+    const f = document.getElementById("df").files[0];
+    if (!f) return;
+    if (!["application/pdf", "image/jpeg", "image/png"].includes(f.type)) return toast("Only PDF, JPG or PNG files are allowed.", true);
+    if (f.size > 10485760) return toast("File is larger than 10 MB.", true);
+    const path = S.fam.id + "/" + id + "/" + Date.now() + "-" + f.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const up = await db.storage.from("documents").upload(path, f);
+    if (up.error) return toast(up.error.message, true);
+    const ins = await db.from("documents").insert({ member_id: id, family_id: S.fam.id, title: document.getElementById("dt").value.trim(), category: document.getElementById("dc").value, file_path: path, file_name: f.name, file_type: f.type, file_size: f.size });
+    if (ins.error) { await db.storage.from("documents").remove([path]); return toast(ins.error.message, true); }
+    toast("Uploaded."); viewMember(id); }); };
+}
+
+/* ---------- START ---------- */
+db.auth.onAuthStateChange((ev, sess) => {
+  if (ev === "PASSWORD_RECOVERY") S.recovery = true;
+  const uid = sess?.user?.id || null;
+  const changed = uid !== (S.user?.id || null);
+  if (!["INITIAL_SESSION", "SIGNED_IN", "SIGNED_OUT", "PASSWORD_RECOVERY"].includes(ev)) return;
+  if (!changed && ev !== "PASSWORD_RECOVERY" && ev !== "INITIAL_SESSION") return;
+  S.user = sess?.user || null;
+  if (changed) { S.fam = null; if (!S.user) S.mode = "login"; }
+  setTimeout(route, 0);
+});
+</script>
 </body>
 </html>
